@@ -27,20 +27,16 @@ public class CommandFactory {
         try {
 
             AbstractCommand ac = cmd.getMap().get(command).getCommand();
-
-            if (params.length > 1 && params[1].toUpperCase().equals("HELP")) {
-                return new Reply("notice", ac.getHelp(), channel);
-            }
-
             boolean success = ac.instantiate(getParamters(params), sender, channel);
+
             if (success) {
-                if (command.toUpperCase().equals("HELP")) {
+                if (command.equals("HELP")) {
                     return new Reply("notice", ac.getOutput(), channel);
                 } else {
                     return new Reply("message", ac.getOutput(), channel);
                 }
             } else {
-                String errorMessage = "Insufficient Parameters " + info.getSplit() + " type " + Colors.BOLD + info.getIdentifier() + command + " help" + Colors.NORMAL + " for more info.";
+                String errorMessage = "Insufficient Parameters " + info.getSplit() + " type " + Colors.BOLD + info.getIdentifier() + "HELP " + command + Colors.NORMAL + " for more info.";
                 return new Reply("message", errorMessage, channel);
             }
 

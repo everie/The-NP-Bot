@@ -14,8 +14,21 @@ import java.util.Map;
  */
 public class Overview extends AbstractCommand {
 
+    String helpCmd;
+
     public String getOutput() {
-        return getCommands();
+        Command cmd = new Command();
+
+        if (helpCmd.equals("default")) {
+            return getCommands();
+        } else {
+            Map<String, CommandInfo> commands = cmd.getMap();
+            if (commands.containsKey(helpCmd)) {
+                return commands.get(helpCmd).getCommand().getHelp();
+            } else {
+                return "There's no command named \"" + helpCmd + "\"";
+            }
+        }
     }
 
     public String getHelp() {
@@ -25,10 +38,17 @@ public class Overview extends AbstractCommand {
     }
 
     protected boolean handleParams(String[] params) {
+        if (params.length < 1) {
+            helpCmd = "default";
+        } else {
+            helpCmd = params[0].toUpperCase();
+        }
+
         return true;
     }
 
     private String getCommands() {
+
         Command cmd = new Command();
 
         Map<Category, ArrayList<CommandInfo>> commands = new HashMap<>();
@@ -47,8 +67,6 @@ public class Overview extends AbstractCommand {
                 }
             }
         }
-
-        //System.out.println(commands);
 
         String display = "";
 
@@ -90,8 +108,6 @@ public class Overview extends AbstractCommand {
                     }
                 }
             }
-
-            //System.out.println(parts);
         }
 
         return display;
