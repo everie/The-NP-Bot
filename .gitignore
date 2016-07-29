@@ -1,0 +1,7 @@
+*.iws
+.idea/
+.DS_Store
+out/
+*.iml
+settings.txt
+channels.txt
