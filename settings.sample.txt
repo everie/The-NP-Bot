@@ -1,0 +1,27 @@
+﻿BOT INFO
+ircNick=TheBestBot
+ircLogin=BestBot
+ircName=Thanks for checking me out
+ircServer=irc.server.com
+ownerNick=YourNick
+ownerHost=your.host.com
+
+BOT SETTINGS
+verbose=true
+commandIdentifier=-
+splitSymbol=•
+
+DB SETTINGS
+dbHost=localhost
+dbPort=3306
+dbName=BotDB
+dbUser=BotUser
+dbPassword=SuperSecretPassword
+
+API KEYS
+apiLastFM=xxx
+apiTraktTV=xxx
+apiGoogle=xxx
+apiOpenWeatherMap=xxx
+apiUrbanDictionary=xxx
+apiYandex=xxx
