@@ -59,16 +59,11 @@ public class Compare {
                     double p1 = entry.getValue();
                     double p2 = m2.get(e);
                     double diff = Math.abs(p1-p2);
-                    //System.out.println((1/((p1+p2)*(p1-p2))) + " -- " + Math.abs(p1-p2));
-
-
 
                     if (diff < 0.4)
                     {
                         double p3 = (p1 + p2) / 2.0;
                         commons.add(new ArtistScore(e, p3));
-
-                        //System.out.println(e + " " + p1 + " " + p2 + " " + p3);
                     }
                 }
             }

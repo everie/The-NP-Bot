@@ -39,7 +39,7 @@ public class TestClass {
         Map<String, CommandInfo> commands = cmd.getMap();
 
         AbstractCommand ac = commands.get("COMPARE").getCommand();
-        ac.instantiate(new String[]{"Everie", "Bober"}, "MePH", "#everieneverie");
+        ac.instantiate(new String[]{"Everie", "Esko"}, "MePH", "#everieneverie");
         System.out.println(ac.getOutput());
 
         /*
