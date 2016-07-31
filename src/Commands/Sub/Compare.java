@@ -44,8 +44,8 @@ public class Compare {
             JSONArray arr1 = obj1.getJSONObject("artists").getJSONArray("artist");
             JSONArray arr2 = obj2.getJSONObject("artists").getJSONArray("artist");
 
-            Map<String, Double> m1 = new HashMap<>(getMap(arr1));
-            Map<String, Double> m2 = new HashMap<>(getMap(arr2));
+            Map<String, Double> m1 = new HashMap<>(getMap2(arr1));
+            Map<String, Double> m2 = new HashMap<>(getMap2(arr2));
 
             List<ArtistScore> commons = new ArrayList<>();
 
@@ -63,7 +63,7 @@ public class Compare {
 
 
 
-                    if (diff < 0.3)
+                    if (diff < 0.4)
                     {
                         double p3 = (p1 + p2) / 2.0;
                         commons.add(new ArtistScore(e, p3));
@@ -125,6 +125,8 @@ public class Compare {
         }
     }
 
+
+
     private Map<String, Double> getMap(JSONArray in) {
         Map<String, Double> list = new HashMap<>();
         int size = in.length();
@@ -142,6 +144,36 @@ public class Compare {
                 if (score < 0.6) {
                     score = score * 0.5;
                 }
+            }
+
+            list.put(name, score);
+        }
+
+        return list;
+    }
+
+    private Map<String, Double> getMap2(JSONArray in) {
+        Map<String, Double> list = new HashMap<>();
+        int size = in.length();
+
+        int top = 0;
+        boolean topSet = false;
+
+        for (int x = 0; x < size; x++) {
+            JSONObject row = in.getJSONObject(x);
+            String name = row.getString("name");
+            int pc = row.getInt("playcount");
+
+            Double score;
+            if (x < calcSize) {
+                score = 1.0;
+            } else
+            {
+                if (!topSet) {
+                    top = pc;
+                    topSet = true;
+                }
+                score = (double)pc / (double)top;
             }
 
             list.put(name, score);

@@ -38,15 +38,15 @@ public class TestClass {
 
         Map<String, CommandInfo> commands = cmd.getMap();
 
-        /*
         AbstractCommand ac = commands.get("COMPARE").getCommand();
-        ac.instantiate(new String[]{"Everie", "Esko"}, "MePH");
+        ac.instantiate(new String[]{"Everie", "Bober"}, "MePH", "#everieneverie");
         System.out.println(ac.getOutput());
-        */
+
+        /*
         AbstractCommand ac = commands.get("HELP").getCommand();
         ac.instantiate(new String[]{}, "Everie", "#np");
         System.out.println(ac.getOutput());
-
+        */
         /*
         ac = commands.get("TOP").getCommand();
         ac.instantiate(new String[]{}, "Everie", "#np");
