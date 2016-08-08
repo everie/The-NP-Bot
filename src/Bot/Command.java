@@ -49,6 +49,7 @@ public class Command {
         commandMap.put("TAGSMONTH", new CommandInfo(new TagsStart(Interval.MONTH), Category.Stats, "tags", false));
         commandMap.put("TAGSYEAR", new CommandInfo(new TagsStart(Interval.YEAR), Category.Stats, "tags", false));
         commandMap.put("TAGSALL", new CommandInfo(new TagsStart(Interval.ALL), Category.Stats, "tags", false));
+        commandMap.put("TOPAVERAGE", new CommandInfo(new TopAverage(), Category.Stats, null, true));
         // SEARCH
         commandMap.put("G", new CommandInfo(new SearchGoogle(), Category.Search, null, true));
         commandMap.put("SPOT", new CommandInfo(new SearchSpotify(), Category.Search, null, true));
