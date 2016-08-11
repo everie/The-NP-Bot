@@ -196,9 +196,9 @@ public class TopTags {
         return ret;
     }
 
-    private static int countScore(int score, int pos, int size) {
+    private int countScore(int score, int pos, int size) {
         double bonus;
-        if (score > 33) {
+        if (score >= 50) {
             bonus = ((double)(size - pos) / (double)size) * 3;
         } else if (score < 50 && score > 30) {
             bonus = 0.75;
