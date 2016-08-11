@@ -199,7 +199,7 @@ public class TopTags {
     private int countScore(int score, int pos, int size) {
         double bonus;
         if (score >= 50) {
-            bonus = ((double)(size - pos) / (double)size) * 3;
+            bonus = ((double)(size - pos) / (double)size) * 2;
         } else if (score < 50 && score > 30) {
             bonus = 0.75;
         } else {
