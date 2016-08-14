@@ -75,20 +75,8 @@ public class Bot extends PircBot {
                 for (int i = 0; i < msg.length; i++) {
                     String link = msg[i];
                     if (link.startsWith("http://") || link.startsWith("https://")) {
-
-                        Boolean youtube = false;
-
-                        // CHECK IF YOUTUBE LINK
-                        if (link.contains("youtube.com") || link.contains("youtu.be")) {
-                            youtube = true;
-                        }
-
-                        if (!youtube) {
-                            String title = web.getTitle(msg[i], sender);
-                            if (title.length() > 0) {
-                                sendMessage(channel, title);
-                            }
-                        }
+                        String title = web.getTitle(msg[i], sender);
+                        sendMessage(channel, title);
                     }
                 }
 

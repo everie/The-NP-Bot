@@ -3,6 +3,7 @@ package Bot;
 import Commands.AbstractCommand;
 import DataObjects.CommandInfo;
 import Tools.Info;
+import Tools.Web;
 
 import java.util.Map;
 
@@ -38,9 +39,11 @@ public class TestClass {
 
         Map<String, CommandInfo> commands = cmd.getMap();
 
+        /*
         AbstractCommand ac = commands.get("COMPARE").getCommand();
         ac.instantiate(new String[]{"Everie", "Esko"}, "MePH", "#everieneverie");
         System.out.println(ac.getOutput());
+        */
 
         /*
         AbstractCommand ac = commands.get("HELP").getCommand();
