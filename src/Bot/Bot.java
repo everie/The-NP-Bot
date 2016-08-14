@@ -22,6 +22,8 @@ public class Bot extends PircBot {
     private Web web = new Web();
     private Set<String> ignoreNicks = new HashSet<>(Arrays.asList("MrRoboto", "DrumsRadio", "BAIT", "FailBot"));
 
+    private int splitLength = 300;
+
     public Bot() {
         this.setName(info.getIrcNick());
         this.setLogin(info.getIrcLogin());
@@ -47,24 +49,32 @@ public class Bot extends PircBot {
 
             if (r != null) {
                 String output = r.getMessage();
-                switch (r.getType()) {
-                    case "message":
-                        sendMessage(channel, output);
-                        break;
+                if (output.length() > splitLength) {
+                    String[] parts = output.split(info.getSplit());
+                    String send = "";
+                    for (int i = 0; i < parts.length; i++) {
+                        String p = parts[i];
+                        if (send.length() + p.length() > splitLength) {
+                            sendReply(send, r.getType(), channel, sender);
+                            send = p.substring(1);
+                        } else {
+                            if (i > 0) {
+                                send += info.getSplit();
+                            }
+                            send += p;
+                        }
+                    }
 
-                    case "notice":
-                        sendNotice(sender, output);
-                        break;
 
-                    case "private":
-                        sendMessage(sender, output);
-                        break;
+                    if (send.length() > 0) {
+                        sendReply(send, r.getType(), channel, sender);
+                    }
 
-                    default:
-                        sendMessage(channel, output);
-                        break;
+                } else {
+                    sendReply(output, r.getType(), channel, sender);
                 }
             }
+
 
         // LINK READER
         } else if (message.contains("http://") || message.contains("https://")) {
@@ -85,6 +95,26 @@ public class Bot extends PircBot {
 
         // KEEPING TRACK OF NICKS
         seen.setLastSeen(sender, message, channel);
+    }
+
+    public void sendReply(String output, String type, String channel, String sender) {
+        switch (type) {
+            case "message":
+                sendMessage(channel, output);
+                break;
+
+            case "notice":
+                sendNotice(sender, output);
+                break;
+
+            case "private":
+                sendMessage(sender, output);
+                break;
+
+            default:
+                sendMessage(channel, output);
+                break;
+        }
     }
 
 }
