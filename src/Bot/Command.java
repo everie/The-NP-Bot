@@ -50,6 +50,10 @@ public class Command {
         commandMap.put("TAGSYEAR", new CommandInfo(new TagsStart(Interval.YEAR), Category.Stats, "tags", false));
         commandMap.put("TAGSALL", new CommandInfo(new TagsStart(Interval.ALL), Category.Stats, "tags", false));
         commandMap.put("TOPAVERAGE", new CommandInfo(new TopAverage(), Category.Stats, null, true));
+        commandMap.put("OBSCURE", new CommandInfo(new ObscureStart(Interval.MONTH), Category.Stats, "obscure", true));
+        commandMap.put("OBSCUREWEEK", new CommandInfo(new ObscureStart(Interval.WEEK), Category.Stats, "obscure", false));
+        commandMap.put("OBSCUREYEAR", new CommandInfo(new ObscureStart(Interval.YEAR), Category.Stats, "obscure", false));
+        commandMap.put("OBSCUREALL", new CommandInfo(new ObscureStart(Interval.ALL), Category.Stats, "obscure", false));
         // SEARCH
         commandMap.put("G", new CommandInfo(new SearchGoogle(), Category.Search, null, true));
         commandMap.put("SPOT", new CommandInfo(new SearchSpotify(), Category.Search, null, true));

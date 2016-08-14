@@ -39,7 +39,9 @@ public class TestClass {
 
         Map<String, CommandInfo> commands = cmd.getMap();
 
-        System.out.println("#NP Top Overall Scrobblers • Total: 1016549 • Z\u200Bnurre: 132012 (13%) • J\u200BulianaStein: 127442 (13%) • i\u200Bhre: 106353 (10%) • Y\u200Bakuzing: 83276 • t\u200Bripod: 76557 • A\u200Blluti: 68835 • E\u200Bsko: 63916 • A\u200BLTHiR: 56037 • M\u200BePH: 52869 • E\u200Bverie: 51739 • S\u200Bamination: 42369 • s\u200Bsmmdd: 42144 • H\u200Bump: 37687 • M\u200Berson: 26026 • B\u200Bober: 18184 • C\u200Bheese: 10937 • A\u200Bmyndele: 10045 • E\u200Brror451: 7408 • q\u200B66: 2529 â".length());
+        AbstractCommand ac = commands.get("OBSCURE").getCommand();
+        ac.instantiate(new String[]{"Everie"}, "Everie", "#everieneverie");
+        System.out.println(ac.getOutput());
 
         /*
         AbstractCommand ac = commands.get("COMPARE").getCommand();
