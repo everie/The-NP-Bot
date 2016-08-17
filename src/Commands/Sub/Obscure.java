@@ -90,10 +90,9 @@ public class Obscure {
 
 
         } catch (IOException |JSONException e) {
-            e.printStackTrace();
+            return "Something went wrong. " + e.getMessage();
         }
 
-        return "";
     }
 
     private String displayNick(NickInfo ni) {

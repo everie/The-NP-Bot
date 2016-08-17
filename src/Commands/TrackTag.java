@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -131,7 +132,7 @@ public class TrackTag extends AbstractCommand {
                 if (postData.length() != 0) postData.append('&');
                 postData.append(param.getKey());
                 postData.append('=');
-                postData.append(String.valueOf(param.getValue()));
+                postData.append(URLEncoder.encode(String.valueOf(param.getValue()), "UTF-8"));
             }
             byte[] postDataBytes = postData.toString().getBytes("UTF-8");
 
