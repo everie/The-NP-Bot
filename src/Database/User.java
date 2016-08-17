@@ -175,7 +175,31 @@ public class User {
         return "";
     }
 
-    public String getUserAuth(String nick) {
+    public void authUser(String sender, String input, String hostname) {
+
+        try
+        {
+            Connection con = dbc.getConnection();
+            PreparedStatement state;
+
+            String updateUser = "INSERT INTO " + dbc.getTableUsers() + " (nick, lastfm_auth, hostname) VALUES (?, ?, ?)" +
+                    " ON DUPLICATE KEY UPDATE lastfm_auth = VALUES(lastfm_auth), hostname = VALUES(hostname)";
+
+            state = con.prepareStatement(updateUser);
+            state.setString(1, sender);
+            state.setString(2, input);
+            state.setString(3, hostname);
+            state.executeUpdate();
+
+            state.close();
+
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public String getUserAuth(String nick, String hostname) {
 
         try
         {
@@ -183,10 +207,11 @@ public class User {
             PreparedStatement state;
             ResultSet rs;
 
-            String getUser = "SELECT lastfm_auth FROM " + dbc.getTableUsers() + " WHERE nick = ?";
+            String getUser = "SELECT lastfm_auth FROM " + dbc.getTableUsers() + " WHERE nick = ? AND hostname = ?";
 
             state = con.prepareStatement(getUser);
             state.setString(1, nick);
+            state.setString(2, hostname);
             rs = state.executeQuery();
 
             String returnNick;

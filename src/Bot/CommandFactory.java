@@ -21,14 +21,14 @@ public class CommandFactory {
         info.setBot(bot);
     }
 
-    public Reply getOutput(String[] params, String sender, String channel) {
+    public Reply getOutput(String[] params, String sender, String channel, String hostname) {
 
         String command = params[0].substring(info.getIdentifier().length()).toUpperCase();
 
         try {
 
             AbstractCommand ac = cmd.getMap().get(command).getCommand();
-            boolean success = ac.instantiate(getParamters(params), sender, channel);
+            boolean success = ac.instantiate(getParamters(params), sender, channel, hostname);
 
             if (success) {
 
@@ -52,12 +52,12 @@ public class CommandFactory {
         }
     }
 
-    public Reply getPrivateAuth(String[] params, String sender) {
+    public Reply getPrivateAuth(String[] params, String sender, String hostname) {
         String command = params[0].substring(info.getIdentifier().length()).toUpperCase();
 
         try {
             Authentication ac = (Authentication) cmd.getMap().get(command).getCommand();
-            ac.instantiate(getParamters(params), sender);
+            ac.instantiate(getParamters(params), sender, hostname);
 
             Reply reply = new Reply();
 
@@ -74,7 +74,7 @@ public class CommandFactory {
                     return reply;
             }
 
-        } catch (NullPointerException e) {
+        } catch (Exception e) {
             return null;
         }
 

@@ -16,13 +16,15 @@ public class Authentication extends AbstractCommand {
     private static String token;
     private String stage;
 
+
     public Authentication(String stage) {
         this.stage = stage;
     }
 
-    public boolean instantiate(String[] params, String sender) {
+    public boolean instantiate(String[] params, String sender, String hostname) {
         this.params = params;
         this.sender = sender;
+        this.hostname = hostname;
 
         boolean success = handleParams(params);
 
@@ -53,7 +55,7 @@ public class Authentication extends AbstractCommand {
 
                 String key = getSession();
                 if (key != null) {
-                    user.registerUser(sender, key, "lastfm_auth");
+                    user.authUser(sender, key, hostname);
                     return "You have successfully authenticated.";
                 } else {
                     return "Something went wrong during authentication.";

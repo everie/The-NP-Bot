@@ -19,13 +19,15 @@ public abstract class AbstractCommand {
     protected String[] params;
     protected String sender;
     protected String channel;
+    protected String hostname;
 
     protected Interval interval;
 
-    public boolean instantiate(String[] params, String sender, String channel) {
+    public boolean instantiate(String[] params, String sender, String channel, String hostname) {
         this.params = params;
         this.sender = sender;
         this.channel = channel;
+        this.hostname = hostname;
 
         boolean success = handleParams(params);
 

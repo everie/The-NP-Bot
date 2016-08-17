@@ -62,7 +62,7 @@ public class TrackTag extends AbstractCommand {
 
             setNickInfo(sender, nickInfo, "lastfm");
             if (nickInfo.getIsReg()) {
-                String auth = user.getUserAuth(sender);
+                String auth = user.getUserAuth(sender, hostname);
 
                 if (auth != null) {
 

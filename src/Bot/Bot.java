@@ -39,10 +39,12 @@ public class Bot extends PircBot {
             sendMessage(channel, output);
         } else {
             if (message.startsWith(info.getIdentifier())) {
-                Reply r = cf.getPrivateAuth(message.split(" "), sender);
-                sendReply(r.getMessage(), r.getType(), null, sender);
-                if (r.getMoreMessage() != null) {
-                    sendReply(r.getMoreMessage(), r.getType(), null, sender);
+                Reply r = cf.getPrivateAuth(message.split(" "), sender, hostname);
+                if (r != null) {
+                    sendReply(r.getMessage(), r.getType(), null, sender);
+                    if (r.getMoreMessage() != null) {
+                        sendReply(r.getMoreMessage(), r.getType(), null, sender);
+                    }
                 }
             }
         }
@@ -53,7 +55,7 @@ public class Bot extends PircBot {
 
         // COMMAND READER
         if (message.startsWith(info.getIdentifier())) {
-            Reply r = cf.getOutput(message.split(" "), sender, channel);
+            Reply r = cf.getOutput(message.split(" "), sender, channel, hostname);
 
             if (r != null) {
                 String output = r.getMessage();
