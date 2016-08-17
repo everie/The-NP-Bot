@@ -45,7 +45,7 @@ public class TestClass {
         System.out.println(ac.getOutput());
         */
 
-        AbstractCommand ac = commands.get("HELP").getCommand();
+        AbstractCommand ac = commands.get("UNLOVE").getCommand();
         ac.instantiate(new String[]{}, "Everie", "#np");
         System.out.println(ac.getOutput());
 

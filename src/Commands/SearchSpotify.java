@@ -8,6 +8,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.util.HashMap;
 
 /**
  * Created by Hans on 27-07-2016.
@@ -34,8 +35,11 @@ public class SearchSpotify extends AbstractCommand {
     private boolean getTrackFromUser(String nick) {
         User user = new User();
         if (user.isUser(nick, "lastfm")) {
-            query = toolBox.getCurrentTrack(user.getUser(nick, "lastfm"));
-            if (query.equals("error")) {
+            HashMap<String, String> map = toolBox.getCurrentTrack(user.getUser(nick, "lastfm"));
+
+            if (map != null) {
+                query = map.get("artist") + " - " + map.get("track");
+            } else {
                 return false;
             }
         } else {
@@ -46,7 +50,7 @@ public class SearchSpotify extends AbstractCommand {
 
     public String getHelp() {
         String cmd = info.getIdentifier() + "SPOT";
-        String explain = "Lets you search for a track in Spotify's library. If given an IRC Nick it'll search for the users current/last played track. " + info.getSplit();
+        String explain = "Lets you search for a track in Spotify's library. If given an IRC Nick it'll search for the users current track. " + info.getSplit();
         return explain + " Usage: " + cmd + " <search query> OR " + cmd + " <IRC Nick>";
     }
 

@@ -67,7 +67,9 @@ public class Command {
         commandMap.put("T", new CommandInfo(new Translate(), Category.Other, null, true, true));
         commandMap.put("SEEN", new CommandInfo(new LastSeen(), Category.Other, null, true, true));
         commandMap.put("SEEN24", new CommandInfo(new LastSeen24(), Category.Other, null, true, true));
-
+        // LAST.FM
+        commandMap.put("LOVE", new CommandInfo(new LoveTrack(true), Category.LastFM, null, true, true));
+        commandMap.put("UNLOVE", new CommandInfo(new LoveTrack(false), Category.LastFM, null, true, true));
     }
 
     public Map<String, CommandInfo> getMap() {

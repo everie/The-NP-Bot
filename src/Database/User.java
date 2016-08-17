@@ -174,4 +174,38 @@ public class User {
 
         return "";
     }
+
+    public String getUserAuth(String nick) {
+
+        try
+        {
+            Connection con = dbc.getConnection();
+            PreparedStatement state;
+            ResultSet rs;
+
+            String getUser = "SELECT lastfm_auth FROM " + dbc.getTableUsers() + " WHERE nick = ?";
+
+            state = con.prepareStatement(getUser);
+            state.setString(1, nick);
+            rs = state.executeQuery();
+
+            String returnNick;
+
+            if (rs.next())
+            {
+                returnNick = rs.getString("lastfm_auth");
+            } else {
+                returnNick = null;
+            }
+
+            state.close();
+            rs.close();
+            return returnNick;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return "";
+    }
 }

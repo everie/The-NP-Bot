@@ -9,11 +9,16 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -164,34 +169,36 @@ public class Toolbox {
         return sdf.format(_date);
     }
 
-    public String getCurrentTrack(String nick) {
+    public HashMap<String, String> getCurrentTrack(String nick) {
 
-        String ret;
         String api = info.getApiLastFM();
+        HashMap<String, String> returnMap = new HashMap<>();
 
         try
         {
             String input = apiToString("http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=" + nick + "&api_key=" + api + "&format=json&limit=2");
             JSONObject obj = new JSONObject(input);
             JSONObject rec = obj.getJSONObject("recenttracks");
-            JSONArray track = rec.getJSONArray("track");
-            JSONObject cur = track.getJSONObject(0);
+            JSONArray trackArray = rec.getJSONArray("track");
+            JSONObject cur = trackArray.getJSONObject(0);
 
-            // Testing if this is currently playing
-            //JSONObject attr = cur.getJSONObject("@attr");
+            // Testing if this is currently playing track
+            JSONObject attr = cur.getJSONObject("@attr");
 
             JSONObject art = cur.getJSONObject("artist");
             String artist = art.getString("#text");
-            String song = cur.getString("name");
+            String track = cur.getString("name");
 
-            ret = artist + " - " + song;
+            returnMap.put("artist", artist);
+            returnMap.put("track", track);
+
+            return returnMap;
 
         }
         catch(IOException|JSONException e) {
-            ret = "error";
+            return null;
         }
 
-        return ret;
     }
 
     public String getDirection(int d)
@@ -226,5 +233,33 @@ public class Toolbox {
         {
             return "n/a";
         }
+    }
+
+    public String getMD5(String in) {
+        String md5 = "";
+        try
+        {
+            byte[] in_byte = in.getBytes("UTF-8");
+            MessageDigest md = MessageDigest.getInstance("MD5");
+
+            byte[] digest = md.digest(in_byte);
+
+            StringBuffer sb = new StringBuffer();
+            for (int i = 0; i < digest.length; i++)
+            {
+                if ((0xff & digest[i]) < 0x10)
+                {
+                    sb.append('0');
+                }
+                sb.append(Integer.toHexString(0xff & digest[i]));
+            }
+            md5 = sb.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        return md5;
     }
 }

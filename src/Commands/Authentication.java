@@ -1,14 +1,10 @@
 package Commands;
 
-import DataObjects.NickInfo;
 import Database.User;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 /**
  * Created by Hans on 28-07-2016.
@@ -38,9 +34,9 @@ public class Authentication extends AbstractCommand {
     }
 
     public String getHelp() {
-        String cmd = info.getIdentifier() + "EXCUSE";
-        String explain = "Want to make it seem like you know what you're doing even though you're clueless? " + info.getSplit();
-        return explain + " Usage: " + cmd;
+        String cmd = info.getIdentifier() + "AUTH";
+        String explain = "Lets you authenticate your last.fm account with the bot. " + info.getSplit();
+        return explain + " Usage: /msg " + info.getIrcNick() + " " + cmd;
     }
 
     public String getOutput() {
@@ -86,35 +82,9 @@ public class Authentication extends AbstractCommand {
 
     private String sessionSig(String method) {
         String sig = "api_key" + api + "method" + method + "token" + token + secret;
-        return getMD5(sig);
+        return toolBox.getMD5(sig);
     }
 
 
-    private String getMD5(String in) {
-        String md5 = "";
-        try
-        {
-            byte[] in_byte = in.getBytes("UTF-8");
-            MessageDigest md = MessageDigest.getInstance("MD5");
 
-            byte[] digest = md.digest(in_byte);
-
-            StringBuffer sb = new StringBuffer();
-            for (int i = 0; i < digest.length; i++)
-            {
-                if ((0xff & digest[i]) < 0x10)
-                {
-                    sb.append('0');
-                }
-                sb.append(Integer.toHexString(0xff & digest[i]));
-            }
-            md5 = sb.toString();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-
-        return md5;
-    }
 }

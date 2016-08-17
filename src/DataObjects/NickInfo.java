@@ -6,6 +6,7 @@ package DataObjects;
 public class NickInfo {
     private String ircNick;
     private String lfmNick;
+    private String authKey;
     private boolean isReg;
 
     public String getIrcNick() {
@@ -22,6 +23,14 @@ public class NickInfo {
 
     public void setLfmNick(String lfmNick) {
         this.lfmNick = lfmNick;
+    }
+
+    public String getAuthKey() {
+        return authKey;
+    }
+
+    public void setAuthKey(String authKey) {
+        this.authKey = authKey;
     }
 
     public boolean getIsReg() {

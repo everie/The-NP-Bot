@@ -36,6 +36,9 @@ public class CommandFactory {
                     case "HELP":
                         return new Reply("notice", ac.getOutput(), channel);
 
+                    case "AUTH":case "DONE":
+                        return null;
+
                     default:
                         return new Reply("message", ac.getOutput(), channel);
                 }
