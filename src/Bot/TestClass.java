@@ -45,8 +45,8 @@ public class TestClass {
         System.out.println(ac.getOutput());
         */
 
-        AbstractCommand ac = commands.get("UNLOVE").getCommand();
-        ac.instantiate(new String[]{}, "Everie", "#np");
+        AbstractCommand ac = commands.get("TAG").getCommand();
+        ac.instantiate(new String[]{"     ,woop "}, "Everie", "#np");
         System.out.println(ac.getOutput());
 
         /*

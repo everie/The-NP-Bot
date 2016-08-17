@@ -68,8 +68,9 @@ public class Command {
         commandMap.put("SEEN", new CommandInfo(new LastSeen(), Category.Other, null, true, true));
         commandMap.put("SEEN24", new CommandInfo(new LastSeen24(), Category.Other, null, true, true));
         // LAST.FM
-        commandMap.put("LOVE", new CommandInfo(new LoveTrack(true), Category.LastFM, null, true, true));
-        commandMap.put("UNLOVE", new CommandInfo(new LoveTrack(false), Category.LastFM, null, true, true));
+        commandMap.put("LOVE", new CommandInfo(new TrackLove(true), Category.LastFM, null, true, true));
+        commandMap.put("UNLOVE", new CommandInfo(new TrackLove(false), Category.LastFM, null, true, true));
+        commandMap.put("TAG", new CommandInfo(new TrackTag(), Category.LastFM, null, true, true));
     }
 
     public Map<String, CommandInfo> getMap() {

@@ -16,7 +16,7 @@ import java.util.Map;
 /**
  * Created by Hans on 17-08-2016.
  */
-public class LoveTrack extends AbstractCommand {
+public class TrackLove extends AbstractCommand {
 
     private NickInfo nickInfo = new NickInfo();
     private String api = info.getApiLastFM();
@@ -28,7 +28,7 @@ public class LoveTrack extends AbstractCommand {
 
     private boolean love;
 
-    public LoveTrack(boolean love) {
+    public TrackLove(boolean love) {
         this.love = love;
         if (love) {
             method = "track.love";
