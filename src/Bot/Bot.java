@@ -22,7 +22,7 @@ public class Bot extends PircBot {
     private Web web = new Web();
     private Set<String> ignoreNicks = new HashSet<>(Arrays.asList("MrRoboto", "DrumsRadio", "BAIT", "FailBot"));
 
-    private int splitLength = 300;
+    private int splitLength = 350;
 
     public Bot() {
         this.setName(info.getIrcNick());
@@ -33,10 +33,18 @@ public class Bot extends PircBot {
     }
 
     public void onPrivateMessage(String sender, String login, String hostname, String message) {
-        if (sender.equals(info.getOwnerNick()) && hostname.equals(info.getOwnerHost())) {
+        if (sender.equals(info.getOwnerNick()) && hostname.equals(info.getOwnerHost()) && message.startsWith("#")) {
             String channel = message.split(" ")[0];
             String output = message.substring(channel.length() + 1);
             sendMessage(channel, output);
+        } else {
+            if (message.startsWith(info.getIdentifier())) {
+                Reply r = cf.getPrivateAuth(message.split(" "), sender);
+                sendReply(r.getMessage(), r.getType(), null, sender);
+                if (r.getMoreMessage() != null) {
+                    sendReply(r.getMoreMessage(), r.getType(), null, sender);
+                }
+            }
         }
     }
 

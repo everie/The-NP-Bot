@@ -103,7 +103,7 @@ public class TopPlays {
                     listScores += name + ": " + us.getScore();
                 } else
                 {
-                    listScores += " • " + name + ": " + us.getScore();
+                    listScores += " " + ss + " " + name + ": " + us.getScore();
                 }
 
                 if (itr < 3) {

@@ -20,6 +20,7 @@ dbPassword=SuperSecretPassword
 
 API KEYS
 apiLastFM=xxx
+apiListFMSecret=xxx
 apiTraktTV=xxx
 apiGoogle=xxx
 apiOpenWeatherMap=xxx

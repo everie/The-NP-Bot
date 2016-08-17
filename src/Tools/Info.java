@@ -87,6 +87,9 @@ public class Info {
                         case "apiLastFM":
                             botInfo.setApiLastFM(data);
                             break;
+                        case "apiListFMSecret":
+                            botInfo.setApiLastFMSecret(data);
+                            break;
                         case "apiTraktTV":
                             botInfo.setApiTraktTV(data);
                             break;

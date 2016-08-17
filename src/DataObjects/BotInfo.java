@@ -31,6 +31,7 @@ public class BotInfo {
     private String dbPassword;
 
     private String apiLastFM;
+    private String apiLastFMSecret;
     private String apiTraktTV;
     private String apiGoogle;
     private String apiOpenWeaherMap;
@@ -165,6 +166,14 @@ public class BotInfo {
 
     public void setApiLastFM(String apiLastFM) {
         this.apiLastFM = apiLastFM;
+    }
+
+    public String getApiLastFMSecret() {
+        return apiLastFMSecret;
+    }
+
+    public void setApiLastFMSecret(String apiLastFMSecret) {
+        this.apiLastFMSecret = apiLastFMSecret;
     }
 
     public String getApiTraktTV() {

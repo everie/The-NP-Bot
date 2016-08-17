@@ -1,6 +1,7 @@
 package Bot;
 
 import Commands.AbstractCommand;
+import Commands.Authentication;
 import DataObjects.BotInfo;
 import DataObjects.Reply;
 import Tools.Info;
@@ -30,10 +31,13 @@ public class CommandFactory {
             boolean success = ac.instantiate(getParamters(params), sender, channel);
 
             if (success) {
-                if (command.equals("HELP")) {
-                    return new Reply("notice", ac.getOutput(), channel);
-                } else {
-                    return new Reply("message", ac.getOutput(), channel);
+
+                switch (command) {
+                    case "HELP":
+                        return new Reply("notice", ac.getOutput(), channel);
+
+                    default:
+                        return new Reply("message", ac.getOutput(), channel);
                 }
             } else {
                 String errorMessage = "Insufficient Parameters " + info.getSplit() + " type " + Colors.BOLD + info.getIdentifier() + "HELP " + command + Colors.NORMAL + " for more info.";
@@ -43,6 +47,34 @@ public class CommandFactory {
         } catch (NullPointerException e) {
             return null;
         }
+    }
+
+    public Reply getPrivateAuth(String[] params, String sender) {
+        String command = params[0].substring(info.getIdentifier().length()).toUpperCase();
+
+        try {
+            Authentication ac = (Authentication) cmd.getMap().get(command).getCommand();
+            ac.instantiate(getParamters(params), sender);
+
+            Reply reply = new Reply();
+
+            switch (command) {
+                case "AUTH":
+                    reply.setType("private");
+                    reply.setMessage(Colors.BOLD + "Step 1: " + Colors.NORMAL + ac.getOutput());
+                    reply.setMoreMessage(Colors.BOLD + "Step 2:" + Colors.NORMAL + " Once you've signed in and allowed access via the link above type " + Colors.BOLD + info.getIdentifier() + "DONE" + Colors.NORMAL);
+                    return reply;
+
+                default:
+                    reply.setType("private");
+                    reply.setMessage(ac.getOutput());
+                    return reply;
+            }
+
+        } catch (NullPointerException e) {
+            return null;
+        }
+
     }
 
     private String[] getParamters(String[] input) {

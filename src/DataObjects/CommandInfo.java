@@ -12,12 +12,14 @@ public class CommandInfo {
     private Category category;
     private String partOf;
     private boolean isDefault;
+    private boolean display;
 
-    public CommandInfo(AbstractCommand command, Category category, String partOf, boolean isDefault) {
+    public CommandInfo(AbstractCommand command, Category category, String partOf, boolean isDefault, boolean display) {
         this.command = command;
         this.category = category;
         this.partOf = partOf;
         this.isDefault = isDefault;
+        this.display = display;
     }
 
     public AbstractCommand getCommand() {
@@ -34,6 +36,10 @@ public class CommandInfo {
 
     public boolean isDefault() {
         return isDefault;
+    }
+
+    public boolean getDisplay() {
+        return display;
     }
 
     public String getIdentifier() {

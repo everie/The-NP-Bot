@@ -54,8 +54,8 @@ public class Overview extends AbstractCommand {
         Map<Category, ArrayList<CommandInfo>> commands = new HashMap<>();
 
         for (Map.Entry<String, CommandInfo> entry : cmd.getMap().entrySet()) {
-            if (!entry.getKey().equals("HELP")) {
-                CommandInfo ci = entry.getValue();
+            CommandInfo ci = entry.getValue();
+            if (ci.getDisplay()) {
                 ci.setIdentifier(entry.getKey());
 
                 if (commands.containsKey(ci.getCategory())) {

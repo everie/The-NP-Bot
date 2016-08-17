@@ -39,8 +39,14 @@ public class TestClass {
 
         Map<String, CommandInfo> commands = cmd.getMap();
 
-        AbstractCommand ac = commands.get("OBSCURE").getCommand();
-        ac.instantiate(new String[]{"Everie"}, "Everie", "#everieneverie");
+        /*
+        AbstractCommand ac = commands.get("AUTH").getCommand();
+        ac.instantiate(new String[]{}, "Everie", "#everieneverie");
+        System.out.println(ac.getOutput());
+        */
+
+        AbstractCommand ac = commands.get("HELP").getCommand();
+        ac.instantiate(new String[]{}, "Everie", "#np");
         System.out.println(ac.getOutput());
 
         /*

@@ -10,6 +10,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Locale;
@@ -50,7 +51,7 @@ public class Toolbox {
 
         try
         {
-            String input = apiToString("http://lt3.in/s/?json&url=" + url);
+            String input = apiToString("http://lt3.in/s/?json&url=" + URLEncoder.encode(url, "UTF-8"));
             JSONObject obj = new JSONObject(input);
             ret = obj.getString("link");
 

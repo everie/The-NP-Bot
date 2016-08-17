@@ -1,8 +1,6 @@
 package Commands;
 
-import Commands.Sub.TopPlays;
 import DataObjects.UserScore;
-import Enums.Interval;
 import org.jibble.pircbot.User;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -72,7 +70,7 @@ public class TopAverage extends AbstractCommand {
                     listScores += name + ": " + us.getScore();
                 } else
                 {
-                    listScores += " • " + name + ": " + us.getScore();
+                    listScores += " " + ss + " " + name + ": " + us.getScore();
                 }
 
             }

@@ -135,24 +135,28 @@ public class User {
             switch (type) {
                 case "lastfm":
                     dispType = "Last.fm account";
-                    dbType = "(?, ?, null, null)";
+                    dbType = "(?, ?, null, null, null)";
                     break;
                 case "trakt":
                     dispType = "Trakt.tv account";
-                    dbType = "(?, null, ?, null)";
+                    dbType = "(?, null, ?, null, null)";
                     break;
                 case "location":
                     dispType = "Location";
-                    dbType = "(?, null, null, ?)";
+                    dbType = "(?, null, null, ?, null)";
+                    break;
+                case "lastfm_auth":
+                    dispType = "Authentication key";
+                    dbType = "(?, null, null, null, ?)";
                     break;
 
                 default:
                     dispType = "Last.fm account";
-                    dbType = "(?, ?, null, null)";
+                    dbType = "(?, ?, null, null, null)";
                     break;
             }
 
-            String updateUser = "INSERT INTO " + dbc.getTableUsers() + " (nick, lastfm, trakt, location) VALUES " + dbType +
+            String updateUser = "INSERT INTO " + dbc.getTableUsers() + " (nick, lastfm, trakt, location, lastfm_auth) VALUES " + dbType +
                     " ON DUPLICATE KEY UPDATE " + type + " = VALUES(" + type + ")";
 
             state = con.prepareStatement(updateUser);
