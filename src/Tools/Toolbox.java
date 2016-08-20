@@ -1,6 +1,10 @@
 package Tools;
 
 import DataObjects.BotInfo;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.jibble.pircbot.Colors;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -21,6 +25,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import static org.apache.http.HttpHeaders.USER_AGENT;
+
 /**
  * Created by Hans on 23-07-2016.
  */
@@ -29,6 +35,7 @@ public class Toolbox {
     BotInfo info = Info.getInfo();
 
     public String apiToString(String in) throws IOException {
+        /*
         URL url = new URL(in);
 
         BufferedReader streamReader = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"));
@@ -48,6 +55,32 @@ public class Toolbox {
         streamReader.close();
 
         return input;
+        */
+
+        HttpClient client = HttpClientBuilder.create().build();
+        HttpGet request = new HttpGet(in);
+
+        // add request header
+        request.addHeader("User-Agent", USER_AGENT);
+        HttpResponse response = client.execute(request);
+
+        int code = response.getStatusLine().getStatusCode();
+
+        if (code != 200) {
+            throw new IOException("Server returned " + String.valueOf(code) + ": " + response.getStatusLine().getReasonPhrase());
+        }
+
+        BufferedReader rd = new BufferedReader(
+                new InputStreamReader(response.getEntity().getContent()));
+
+        StringBuffer result = new StringBuffer();
+        String line = "";
+        while ((line = rd.readLine()) != null) {
+            result.append(line);
+        }
+
+        return result.toString();
+
     }
 
     public String shortURL(String url) {
