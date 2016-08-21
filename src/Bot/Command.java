@@ -71,6 +71,7 @@ public class Command {
         commandMap.put("LOVE", new CommandInfo(new TrackLove(true), Category.LastFM, null, true, true));
         commandMap.put("UNLOVE", new CommandInfo(new TrackLove(false), Category.LastFM, null, true, true));
         commandMap.put("TAG", new CommandInfo(new TrackTag(), Category.LastFM, null, true, true));
+        commandMap.put("TAGARTIST", new CommandInfo(new TrackArtistTag(), Category.LastFM, null, true, true));
     }
 
     public Map<String, CommandInfo> getMap() {
