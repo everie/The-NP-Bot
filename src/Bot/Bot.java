@@ -81,7 +81,9 @@ public class Bot extends PircBot {
                     }
 
                 } else {
-                    sendReply(output, r.getType(), channel, sender);
+                    if (output.length() > 0) {
+                        sendReply(output, r.getType(), channel, sender);
+                    }
                 }
             }
 
@@ -96,7 +98,9 @@ public class Bot extends PircBot {
                     String link = msg[i];
                     if (link.startsWith("http://") || link.startsWith("https://")) {
                         String title = web.getTitle(msg[i], sender);
-                        sendMessage(channel, title);
+                        if (title.length() > 0) {
+                            sendMessage(channel, title);
+                        }
                     }
                 }
 

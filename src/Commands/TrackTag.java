@@ -44,13 +44,8 @@ public class TrackTag extends AbstractCommand {
 
             for (String t : tags.split(",")) {
                 if (t.replaceAll(" ", "").length() > 0) {
-                    String tempTag = t;
-                    if (tempTag.startsWith(" ")) {
-                        tempTag = tempTag.substring(1);
-                    }
-                    if (tempTag.endsWith(" ")) {
-                        tempTag = tempTag.substring(0, tempTag.length() - 1);
-                    }
+                    String tempTag = t.trim();
+
                     if (tagList.size() < 10) {
                         tagList.add(tempTag);
                     } else {
