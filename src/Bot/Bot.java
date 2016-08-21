@@ -20,7 +20,7 @@ public class Bot extends PircBot {
     private BotInfo info = Info.getInfo();
     private Seen seen = new Seen();
     private Web web = new Web();
-    private Set<String> ignoreNicks = new HashSet<>(Arrays.asList("MrRoboto", "DrumsRadio", "BAIT", "FailBot"));
+    private Set<String> ignoreNicks = new HashSet<>(Arrays.asList("MrRoboto", "DrumsRadio", "BAIT", "FailBot", "nplayer"));
 
     private int splitLength = 350;
 
