@@ -145,6 +145,8 @@ public class Obscure {
             return 2.5;
         } else if (listeners > 50000 & listeners <= 100000) {
             return 2;
+        } else if (listeners > 100000 & listeners <= 500000) {
+            return 1.5;
         } else if (listeners > 500000 & listeners <= 1000000) {
             return 1;
         } else {
