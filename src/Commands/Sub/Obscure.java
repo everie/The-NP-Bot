@@ -76,15 +76,19 @@ public class Obscure {
                 if (al.getMap().containsKey(currentArtist)) {
                     artistList.add(al.getMap().get(currentArtist));
                 } else {
-                    String inputArtist = toolBox.apiToString("http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=" + URLEncoder.encode(currentArtist, "UTF-8") + "&api_key=" + api + "&format=json");
+                    try {
+                        String inputArtist = toolBox.apiToString("http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=" + URLEncoder.encode(currentArtist, "UTF-8") + "&api_key=" + api + "&format=json");
 
-                    JSONObject objArtist = new JSONObject(inputArtist);
-                    listeners = objArtist.getJSONObject("artist").getJSONObject("stats").getInt("listeners");
+                        JSONObject objArtist = new JSONObject(inputArtist);
+                        listeners = objArtist.getJSONObject("artist").getJSONObject("stats").getInt("listeners");
 
-                    ArtistObscure ao = new ArtistObscure(currentArtist, listeners, expiryDate);
+                        ArtistObscure ao = new ArtistObscure(currentArtist, listeners, expiryDate);
 
-                    al.getMap().put(currentArtist, ao);
-                    artistList.add(ao);
+                        al.getMap().put(currentArtist, ao);
+                        artistList.add(ao);
+                    } catch (JSONException e) {
+                        System.out.println("Failed artists: " + currentArtist);
+                    }
                 }
             }
 

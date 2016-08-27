@@ -67,6 +67,10 @@ public abstract class AbstractCommand {
     protected String arrayToString(String[] params, int from) {
         String output = "";
 
+        if (params.length < 2) {
+            return params[0];
+        }
+
         for (int i = from; i < params.length; i++) {
             if (i > from) {
                 output += " ";

@@ -39,11 +39,11 @@ public class TestClass {
 
         Map<String, CommandInfo> commands = cmd.getMap();
 
-        /*
-        AbstractCommand ac = commands.get("AUTH").getCommand();
-        ac.instantiate(new String[]{}, "Everie", "#everieneverie");
+
+        AbstractCommand ac = commands.get("OBSCUREWEEK").getCommand();
+        ac.instantiate(new String[]{}, "ALTHiR", "#everieneverie", "lol.com");
         System.out.println(ac.getOutput());
-        */
+
 
         /*
         AbstractCommand ac = commands.get("COMPARE").getCommand();

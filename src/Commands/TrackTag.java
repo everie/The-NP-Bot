@@ -162,7 +162,7 @@ public class TrackTag extends AbstractCommand {
             displayTags += tagList.get(i);
         }
 
-        return displayNick(nickInfo) + " tagged " + npArtist + " - " + npTrack + " with: " + displayTags;
+        return displayNick(nickInfo) + " tagged \"" + npTrack + "\" with: " + displayTags;
     }
 
     private String getSignature(String method, String a, String t, String k, String tags) {

@@ -33,7 +33,7 @@ public class CommandFactory {
             if (success) {
 
                 switch (command) {
-                    case "HELP":
+                    case "HELP"://case "LOVE":case "UNLOVE":case "TAG":case "TAGARTIST":
                         return new Reply("notice", ac.getOutput(), channel);
 
                     case "AUTH":case "DONE":

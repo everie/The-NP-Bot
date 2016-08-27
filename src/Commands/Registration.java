@@ -17,7 +17,7 @@ public class Registration extends AbstractCommand {
     protected boolean handleParams(String[] params) {
 
         if (params.length > 0) {
-            nick = params[0];
+            nick = arrayToString(params, 0);
         } else {
             return false;
         }
