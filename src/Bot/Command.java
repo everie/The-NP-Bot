@@ -60,6 +60,7 @@ public class Command {
         commandMap.put("G", new CommandInfo(new SearchGoogle(), Category.Search, null, true, true));
         commandMap.put("SPOT", new CommandInfo(new SearchSpotify(), Category.Search, null, true, true));
         commandMap.put("YT", new CommandInfo(new SearchYoutube(), Category.Search, null, true, true));
+        commandMap.put("EP", new CommandInfo(new TVShows(), Category.Search, null, true, true));
         // OTHER
         commandMap.put("CUR", new CommandInfo(new Currency(), Category.Other, null, true, true));
         commandMap.put("C", new CommandInfo(new Calculator(), Category.Other, null, true, true));

@@ -14,15 +14,15 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.net.URL;
 import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import static org.apache.http.HttpHeaders.USER_AGENT;
@@ -171,6 +171,8 @@ public class Toolbox {
     }
 
 
+
+
     public String escapeName(String name) {
         int len = name.length();
         String n1 = name.substring(0,1);
@@ -200,6 +202,19 @@ public class Toolbox {
         java.util.Date _date = new java.util.Date(ts * 1000);
         SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH);
         return sdf.format(_date);
+    }
+
+    public long getTimeStampFromDate(String dateString)
+    {
+        try {
+            //String str = "Jun 13 2003 23:11:52.454 UTC";
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            Date date = df.parse(dateString); // 2016-09-14 22:00
+            long epoch = date.getTime();
+            return Math.round(epoch / 1000);
+        } catch (ParseException e) {
+            return 0;
+        }
     }
 
     public HashMap<String, String> getCurrentTrack(String nick) {

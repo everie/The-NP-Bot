@@ -39,11 +39,15 @@ public class TestClass {
 
         Map<String, CommandInfo> commands = cmd.getMap();
 
-
-        AbstractCommand ac = commands.get("OBSCUREWEEK").getCommand();
-        ac.instantiate(new String[]{}, "ALTHiR", "#everieneverie", "lol.com");
+        AbstractCommand ac = commands.get("EP").getCommand();
+        ac.instantiate(new String[]{"mr robot"}, "Psi", "#everieneverie", "lol.com");
         System.out.println(ac.getOutput());
 
+/*
+        AbstractCommand ac = commands.get("OBSCUREWEEK").getCommand();
+        ac.instantiate(new String[]{"Everie"}, "Psi", "#everieneverie", "lol.com");
+        System.out.println(ac.getOutput());
+*/
 
         /*
         AbstractCommand ac = commands.get("COMPARE").getCommand();

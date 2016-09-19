@@ -55,7 +55,7 @@ public class Obscure {
         }
 
 
-        long expiryDate = Instant.now().getEpochSecond() + (30 * 24 * 60 * 60);
+        long expiryDate = Instant.now().getEpochSecond() + (14 * 24 * 60 * 60);
         ArtistListeners al = loadObject();
         if (al == null) {
             al = new ArtistListeners();
@@ -97,11 +97,13 @@ public class Obscure {
             Collections.sort(artistList, Comparator.reverseOrder());
 
             double points = 0;
+            //double points2 = 0;
             String dispObscure = "";
             String leastObscureArtist = "";
             int leastObscureListeners = 0;
+            int listSize = artistList.size();
 
-            for (int i = 0; i < artistList.size(); i++) {
+            for (int i = 0; i < listSize; i++) {
                 ArtistObscure ao = artistList.get(i);
                 if (i < 3) {
                     if (i > 0) {
@@ -109,15 +111,30 @@ public class Obscure {
                     }
                     dispObscure += ao.getArtist() + " (" + ao.getListeners() + " listeners)";
                 }
-                if (i == artistList.size() - 1) {
+                if (i == listSize - 1) {
                     leastObscureArtist = ao.getArtist();
                     leastObscureListeners = ao.getListeners();
                 }
-                points += getPoints(ao.getListeners());
+                //System.out.println(ao.getListeners());
+                //System.out.println(getPoints(ao.getListeners(), listSize));
+                //System.out.println(getCalculatedPoints(ao.getListeners(), listSize));
+                //points2 += getCalculatedPoints(ao.getListeners(), listSize);
+                points += getCalculatedPoints(ao.getListeners(), listSize);
             }
 
-            return description + " " + displayNick(nickInfo) + " has been " + Colors.BOLD + (int)points + "%" + Colors.NORMAL + " hipster " + ss + " Most significant: " + dispObscure +
-                    " " + ss + " Least Significant: " + leastObscureArtist + " (" + leastObscureListeners + " listeners)";
+            String dispPct;
+            double totalPoints = Math.round(points * 10.0) / 10.0;
+
+            if (totalPoints == Math.round(totalPoints)) {
+                dispPct = (int)totalPoints + "%";
+            } else {
+                dispPct = totalPoints + "%";
+            }
+
+            //System.out.println(points2 + " " + totalPoints);
+
+            return description + " " + displayNick(nickInfo) + " has been " + Colors.BOLD + dispPct + Colors.NORMAL + " hipster " + ss + " Most obscure: " + dispObscure +
+                    " " + ss + " Least obscure: " + leastObscureArtist + " (" + leastObscureListeners + " listeners)";
 
 
         } catch (IOException |JSONException e) {
@@ -134,7 +151,8 @@ public class Obscure {
         }
     }
 
-    private double getPoints(int listeners) {
+    private double getPoints(int listeners, int size) {
+        //double pointsPrArtist = 100.0 / (double)size;
         if (listeners <= 500) {
             return 5;
         } else if (listeners > 500 & listeners <= 2000) {
@@ -156,6 +174,19 @@ public class Obscure {
         } else {
             return 0;
         }
+    }
+
+    private double getCalculatedPoints(int listeners, int size) {
+        double pointsPrArtist = 100.0 / (double)size;
+        //double points = 6.5707 * (1.0 / Math.pow((double)listeners, 0.30294));
+        //double points = 1.00231 * (1.0 / Math.pow(Math.E, 0.000004607470000 * (double)listeners));
+        double points = 1.00346 * (1.0 / Math.pow(Math.E, 0.00000691121 * (double)listeners));
+        //double points = -0.130248 * Math.log10(Math.pow(9.26097,-7) * (double)listeners);
+        //System.out.println(points);
+        if (points > 1) {
+            points = 1.0;
+        }
+        return points * pointsPrArtist;
     }
 
 

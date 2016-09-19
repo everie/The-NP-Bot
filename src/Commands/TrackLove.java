@@ -132,7 +132,7 @@ public class TrackLove extends AbstractCommand {
             action = "no longer loves";
         }
 
-        return displayNick(nickInfo) + " " + action + " \"" + npTrack + "\".";
+        return displayNick(nickInfo) + " " + action + " \"" + npArtist + " - " + npTrack + "\".";
 
     }
 
