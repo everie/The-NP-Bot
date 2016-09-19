@@ -35,7 +35,9 @@ public class TVShows extends AbstractCommand {
     }
 
     public String getHelp() {
-        return null;
+        String cmd = info.getIdentifier() + "EP";
+        String explain = "Helps you keeping up to date with all your favorite TV shows. " + info.getSplit();
+        return explain + " Usage: " + cmd + " <tv show>";
     }
 
     public String getOutput() {
