@@ -51,13 +51,34 @@ public class TVShows extends AbstractCommand {
 
             JSONObject obj = new JSONObject(input);
             String name = obj.getString("name");
+            String url = obj.getString("url");
+            double rating = obj.getJSONObject("rating").getDouble("average");
             String genres = getStringOfArray(obj.getJSONArray("genres"));
+
+            /*
+            JSONObject network;
+
+            try {
+                network = obj.getJSONObject("network");
+            } catch (JSONException e) {
+                try {
+                    network = obj.getJSONObject("webChannel");
+                } catch (JSONException ee) {
+                    network = null;
+                }
+            }
+
+            if (network != null) {
+                String networkName = network.getString("name");
+                System.out.println(networkName);
+            }
+            */
 
             String status = obj.getString("status");
 
             JSONArray episodes = obj.getJSONObject("_embedded").getJSONArray("episodes");
 
-            ret = name + genres + " " + ss + " Status: " + status;
+            ret = name + " (" + rating + ")" + genres + " " + ss + " Status: " + status;
 
             boolean nextFound = false;
             String next = "";
@@ -67,8 +88,11 @@ public class TVShows extends AbstractCommand {
                 JSONObject ep = episodes.getJSONObject(i);
                 String airDate = ep.getString("airdate");
                 String airTime = ep.getString("airtime");
+                if (airTime.length() < 1) {
+                    airTime = "??:??";
+                }
                 String airShow = airDate + " " + airTime;
-                long airStamp = toolBox.getTimeStampFromDate(airShow);
+                long airStamp = getTimeStampFromDate(airDate, airTime);
 
                 if (airStamp > now) {
                     String duration = showDuration((airStamp - now) * 1000);
@@ -98,6 +122,7 @@ public class TVShows extends AbstractCommand {
                 }
             }
 
+            ret += " " + ss + " " + toolBox.shortURL(url);
 
         }
         catch(IOException |JSONException e) {
@@ -121,7 +146,7 @@ public class TVShows extends AbstractCommand {
             dispSeason = "0" + season;
         }
 
-        return Colors.BOLD + "S" + Colors.NORMAL + dispSeason + Colors.BOLD + "E" + Colors.NORMAL + dispEpisode;
+        return "S" + dispSeason + "E" + dispEpisode;
     }
 
     private String getStringOfArray(JSONArray array) {
@@ -170,6 +195,23 @@ public class TVShows extends AbstractCommand {
         }
 
         return ret;
+    }
+
+    public long getTimeStampFromDate(String airDate, String airTime)
+    {
+        if (airTime.equals("??:??")) {
+            airTime = "23:59";
+        }
+
+        try {
+            //String str = "Jun 13 2003 23:11:52.454 UTC";
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            Date date = df.parse(airDate + " " + airTime); // 2016-09-14 22:00
+            long epoch = date.getTime();
+            return Math.round(epoch / 1000);
+        } catch (ParseException e) {
+            return 0;
+        }
     }
 
     /*

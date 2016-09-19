@@ -40,7 +40,7 @@ public class TestClass {
         Map<String, CommandInfo> commands = cmd.getMap();
 
         AbstractCommand ac = commands.get("EP").getCommand();
-        ac.instantiate(new String[]{"mr robot"}, "Psi", "#everieneverie", "lol.com");
+        ac.instantiate(new String[]{"arrested development"}, "Psi", "#everieneverie", "lol.com");
         System.out.println(ac.getOutput());
 
 /*

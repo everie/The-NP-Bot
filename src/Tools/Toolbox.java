@@ -204,19 +204,6 @@ public class Toolbox {
         return sdf.format(_date);
     }
 
-    public long getTimeStampFromDate(String dateString)
-    {
-        try {
-            //String str = "Jun 13 2003 23:11:52.454 UTC";
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-            Date date = df.parse(dateString); // 2016-09-14 22:00
-            long epoch = date.getTime();
-            return Math.round(epoch / 1000);
-        } catch (ParseException e) {
-            return 0;
-        }
-    }
-
     public HashMap<String, String> getCurrentTrack(String nick) {
 
         String api = info.getApiLastFM();
