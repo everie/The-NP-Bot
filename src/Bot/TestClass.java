@@ -39,6 +39,7 @@ public class TestClass {
 
         Map<String, CommandInfo> commands = cmd.getMap();
 
+        /*
         AbstractCommand ac = commands.get("EP").getCommand();
         ac.instantiate(new String[]{"arrested development"}, "Psi", "#everieneverie", "lol.com");
         System.out.println(ac.getOutput());
@@ -49,11 +50,11 @@ public class TestClass {
         System.out.println(ac.getOutput());
 */
 
-        /*
+
         AbstractCommand ac = commands.get("COMPARE").getCommand();
-        ac.instantiate(new String[]{"Everie", "Esko"}, "MePH", "#everieneverie");
+        ac.instantiate(new String[]{"Everie", "MePH"}, "MePH", "#everieneverie", "whatev");
         System.out.println(ac.getOutput());
-        */
+
 
         /*
         AbstractCommand ac = commands.get("HELP").getCommand();

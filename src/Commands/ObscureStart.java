@@ -35,7 +35,7 @@ public class ObscureStart extends AbstractCommand {
     public String getOutput() {
         Obscure stats = new Obscure();
 
-        return stats.getOutput(interval.getLfmInterval(), nickInfo);
+        return stats.getOutput(interval, nickInfo);
     }
 
     public String getHelp() {

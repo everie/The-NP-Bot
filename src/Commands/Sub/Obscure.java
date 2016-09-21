@@ -4,6 +4,7 @@ import DataObjects.ArtistListeners;
 import DataObjects.ArtistObscure;
 import DataObjects.BotInfo;
 import DataObjects.NickInfo;
+import Enums.Interval;
 import Tools.Info;
 import Tools.Toolbox;
 import org.jibble.pircbot.Colors;
@@ -28,12 +29,13 @@ public class Obscure {
     private int limit = 20;
     private String alFilename = "ArtistListeners.ser";
 
-    public String getOutput(String interval, NickInfo nickInfo) {
+    public String getOutput(Interval interval, NickInfo nickInfo) {
 
         String ss = info.getSplit();
         String api = info.getApiLastFM();
         String nick = nickInfo.getLfmNick();
 
+        /*
         String description;
 
         switch (interval) {
@@ -53,6 +55,7 @@ public class Obscure {
                 description = "Overall";
                 break;
         }
+        */
 
 
         long expiryDate = Instant.now().getEpochSecond() + (14 * 24 * 60 * 60);
@@ -62,7 +65,7 @@ public class Obscure {
         }
 
         try {
-            String input = toolBox.apiToString("http://ws.audioscrobbler.com/2.0/?method=user.gettopartists&user=" + nick + "&api_key=" + api + "&format=json&limit=" + limit + "&period=" + interval);
+            String input = toolBox.apiToString("http://ws.audioscrobbler.com/2.0/?method=user.gettopartists&user=" + nick + "&api_key=" + api + "&format=json&limit=" + limit + "&period=" + interval.getLfmInterval());
             JSONObject obj = new JSONObject(input);
 
             JSONObject artists = obj.getJSONObject("topartists");
@@ -133,7 +136,7 @@ public class Obscure {
 
             //System.out.println(points2 + " " + totalPoints);
 
-            return description + " " + displayNick(nickInfo) + " has been " + Colors.BOLD + dispPct + Colors.NORMAL + " hipster " + ss + " Most obscure: " + dispObscure +
+            return interval.getTextInterval() + " " + displayNick(nickInfo) + " has been " + Colors.BOLD + dispPct + Colors.NORMAL + " hipster " + ss + " Most obscure: " + dispObscure +
                     " " + ss + " Least obscure: " + leastObscureArtist + " (" + leastObscureListeners + " listeners)";
 
 

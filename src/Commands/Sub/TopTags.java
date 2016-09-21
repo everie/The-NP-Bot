@@ -3,6 +3,7 @@ package Commands.Sub;
 import DataObjects.BotInfo;
 import DataObjects.NickInfo;
 import DataObjects.TagScore;
+import Enums.Interval;
 import Tools.Info;
 import Tools.Toolbox;
 import org.json.JSONArray;
@@ -20,7 +21,7 @@ public class TopTags {
     Toolbox toolBox = new Toolbox();
     BotInfo info = Info.getInfo();
 
-    public String getOutput(String interval, NickInfo nickInfo)
+    public String getOutput(Interval interval, NickInfo nickInfo)
     {
         int limit = 50;
         String dir = "artist_tags";
@@ -48,7 +49,7 @@ public class TopTags {
 
         try
         {
-            String input = toolBox.apiToString("http://ws.audioscrobbler.com/2.0/?method=library.getartists&api_key=" + api + "&user=" + nick + "&format=json&limit=" + limit + "&period=" + interval);
+            String input = toolBox.apiToString("http://ws.audioscrobbler.com/2.0/?method=library.getartists&api_key=" + api + "&user=" + nick + "&format=json&limit=" + limit + "&period=" + interval.getLfmInterval());
 
             JSONObject obj = new JSONObject(input);
             JSONArray arr = obj.getJSONObject("artists").getJSONArray("artist");
@@ -109,7 +110,7 @@ public class TopTags {
 
                 List<TagScore> tags = new ArrayList<>();
 
-                String encName = URLEncoder.encode(a);
+                String encName = URLEncoder.encode(a, "UTF-8");
                 aFile = new File(dir + File.separator + encName + ".txt");
 
                 String input2 = toolBox.apiToString("http://ws.audioscrobbler.com/2.0/?method=artist.gettoptags&artist=" + encName + "&api_key=" + api + "&format=json");
@@ -187,7 +188,7 @@ public class TopTags {
                 }
             }
 
-            ret = dispTags + ".";
+            ret = interval.getTextInterval() + ": " + dispTags + ".";
 
         } catch (IOException e) {
             ret = "Something went wrong. " + e.getMessage();

@@ -36,7 +36,7 @@ public class TagsStart extends AbstractCommand {
     public String getOutput() {
         TopTags tags = new TopTags();
 
-        return tags.getOutput(interval.getLfmInterval(), nickInfo);
+        return tags.getOutput(interval, nickInfo);
     }
 
     public String getHelp() {

@@ -60,7 +60,7 @@ public class Compare {
                     double p2 = m2.get(e);
                     double diff = Math.abs(p1-p2);
 
-                    if (diff < 0.4)
+                    if (diff < 0.35)
                     {
                         double p3 = (p1 + p2) / 2.0;
                         commons.add(new ArtistScore(e, p3));
@@ -95,14 +95,22 @@ public class Compare {
             }
 
             points = Math.round(points*10.0)/10.0;
-            double common = Math.round(((double)commonArtists * 10.0 / (double)limit)*100.0) / 10.0;
+            //double common = Math.round(((double)commonArtists * 10.0 / (double)limit)*100.0) / 10.0;
             String love = "";
+
+            String dispPoints;
+            if (points == Math.round(points)) {
+                dispPoints = String.valueOf((int)points);
+            } else {
+                dispPoints = String.valueOf(points);
+            }
+
             if (points >= 60) {
-                love = Colors.BOLD + "<3 " + points + "%" + Colors.NORMAL;
+                love = Colors.BOLD + "<3 " + dispPoints + "%" + Colors.NORMAL;
             } else if (points >= 33 && points < 60) {
-                love = "<3 " + points + "%";
+                love = "<3 " + dispPoints + "%";
             } else if (points < 33) {
-                love = "</3 " + points + "%";
+                love = "</3 " + dispPoints + "%";
             }
 
             String commonPart;
@@ -110,7 +118,7 @@ public class Compare {
             if (commonArtists == 0) {
                 commonPart = " Nothing in common.";
             } else {
-                commonPart = " Commons: " + common + "% " + ss + " " + dispArtists;
+                commonPart = " Commons: " + commonArtists + " " + ss + " " + dispArtists;
             }
 
             return displayNick(nickInfo1) + " ↔ " + displayNick(nickInfo2) + " " + ss + " " + love + " " + ss + commonPart;
@@ -120,7 +128,8 @@ public class Compare {
         }
     }
 
-
+    // TO-DO
+    // Combine rank-score + ratio-score
 
     private Map<String, Double> getMap(JSONArray in) {
         Map<String, Double> list = new HashMap<>();
@@ -160,6 +169,8 @@ public class Compare {
             int pc = row.getInt("playcount");
 
             Double score;
+            Double scoreRank;
+
             if (x < calcSize) {
                 score = 1.0;
             } else
@@ -168,7 +179,14 @@ public class Compare {
                     top = pc;
                     topSet = true;
                 }
+                scoreRank = ((double) size - (double) x) / (double) size;
+                if (scoreRank < 0.6) {
+                    scoreRank = scoreRank * 0.5;
+                }
+
                 score = (double)pc / (double)top;
+                //score = (score + scoreRank) / 2;
+                score = (scoreRank * 0.6) + (score * 0.4);
             }
 
             list.put(name, score);
