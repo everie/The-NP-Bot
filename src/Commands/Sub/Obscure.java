@@ -183,12 +183,26 @@ public class Obscure {
         double pointsPrArtist = 100.0 / (double)size;
         //double points = 6.5707 * (1.0 / Math.pow((double)listeners, 0.30294));
         //double points = 1.00231 * (1.0 / Math.pow(Math.E, 0.000004607470000 * (double)listeners));
-        double points = 1.00346 * (1.0 / Math.pow(Math.E, 0.00000691121 * (double)listeners));
+        //double points = 1.00346 * (1.0 / Math.pow(Math.E, 0.00000691121 * (double)listeners));
         //double points = -0.130248 * Math.log10(Math.pow(9.26097,-7) * (double)listeners);
+
+        double pointsBlack = Math.pow((double)listeners, (-0.000001 * (double)listeners)) + 0.01;
+        double pointsRed = 20000.0 / (20000.0 + (double)listeners);
+
+        double points = (pointsRed * 0.5) + (pointsBlack * 0.5);
+
+        //System.out.println("black: " + pointsBlack);
+        //System.out.println("red: " + pointsRed);
+
+        //System.out.println(points);
+
         //System.out.println(points);
         if (points > 1) {
             points = 1.0;
         }
+
+        //System.out.println(points);
+
         return points * pointsPrArtist;
     }
 

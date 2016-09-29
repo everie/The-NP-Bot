@@ -43,18 +43,23 @@ public class TestClass {
         AbstractCommand ac = commands.get("EP").getCommand();
         ac.instantiate(new String[]{"arrested development"}, "Psi", "#everieneverie", "lol.com");
         System.out.println(ac.getOutput());
+        */
 
-/*
-        AbstractCommand ac = commands.get("OBSCUREWEEK").getCommand();
-        ac.instantiate(new String[]{"Everie"}, "Psi", "#everieneverie", "lol.com");
+        AbstractCommand ac = commands.get("ARTISTTRACKS").getCommand();
+        ac.instantiate(new String[]{"Chemical Brothers"}, "Psi", "#everieneverie", "lol.com");
         System.out.println(ac.getOutput());
-*/
 
+        /*
+        AbstractCommand ac = commands.get("OBSCUREWEEK").getCommand();
+        ac.instantiate(new String[]{"Error451"}, "Psi", "#everieneverie", "lol.com");
+        System.out.println(ac.getOutput());
+        */
 
+        /*
         AbstractCommand ac = commands.get("COMPARE").getCommand();
         ac.instantiate(new String[]{"Everie", "MePH"}, "MePH", "#everieneverie", "whatev");
         System.out.println(ac.getOutput());
-
+        */
 
         /*
         AbstractCommand ac = commands.get("HELP").getCommand();

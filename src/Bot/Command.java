@@ -45,6 +45,7 @@ public class Command {
         commandMap.put("TOPYEAR", new CommandInfo(new TopStart(Interval.YEAR), Category.Stats, "top", false, true));
         commandMap.put("TOPALL", new CommandInfo(new TopStart(Interval.ALL), Category.Stats, "top", false, true));
         commandMap.put("ARTIST", new CommandInfo(new ArtistStats(), Category.Stats, null, true, true));
+        commandMap.put("ARTISTTRACKS", new CommandInfo(new ArtistTracks(), Category.Stats, null, true, true));
         commandMap.put("TOPARTIST", new CommandInfo(new ArtistTop(), Category.Stats, null, true, true));
         commandMap.put("RECENT", new CommandInfo(new RecentTop(), Category.Stats, null, true, true));
         commandMap.put("TAGS", new CommandInfo(new TagsStart(Interval.WEEK), Category.Stats, "tags", true, true));

@@ -1,5 +1,6 @@
 package Commands;
 
+import DataObjects.AverageComperator;
 import DataObjects.UserScore;
 import org.jibble.pircbot.User;
 import org.json.JSONException;
@@ -36,7 +37,7 @@ public class TopAverage extends AbstractCommand {
         for (int x = 0; x < list.size(); x++) {
             UserScore us = list.get(x);
             String lastfm = us.getLastFM();
-            int score = 0;
+            double score = 0;
 
             try
             {
@@ -46,32 +47,36 @@ public class TopAverage extends AbstractCommand {
                 int plays = userObj.getInt("playcount");
                 long reg = userObj.getJSONObject("registered").getLong("unixtime");
                 long days = (now - reg) / (60 * 60 * 24);
-                score = (int)Math.round((double)plays / (double)days);
+                score = (double)plays / (double)days;
 
             } catch (IOException |JSONException e) {
                 score = 0;
             }
 
-            us.setScore(score);
+            us.setAvg(score);
         }
 
-        Collections.sort(list);
+        Collections.sort(list, new AverageComperator());
 
         String listScores = "";
         int itr = 0;
 
         for (UserScore us : list) {
-            if (us.getScore() > 0)
+            if (us.getAvg() > 0)
             {
                 String name = toolBox.escapeName(us.getNick());
-
-                if (itr == 0)
-                {
-                    listScores += name + ": " + us.getScore();
-                } else
-                {
-                    listScores += " " + ss + " " + name + ": " + us.getScore();
+                String dispAvg;
+                if (us.getAvg() == Math.round(us.getAvg())) {
+                    dispAvg = String.valueOf((int)us.getAvg());
+                } else {
+                    dispAvg = String.valueOf(Math.round(us.getAvg() * 10.0) / 10.0);
                 }
+
+                if (itr > 0) {
+                    listScores += " " + ss + " ";
+                }
+
+                listScores += name + ": " + dispAvg;
 
             }
             itr++;

@@ -8,6 +8,7 @@ public class UserScore implements Comparable<UserScore>
     private String nick;
     private String lastfm;
     private int score;
+    private double avg;
 
     public UserScore(String _nick, String _lastfm) {
         this.nick = _nick;
@@ -30,6 +31,12 @@ public class UserScore implements Comparable<UserScore>
 
     public int getScore() {
         return score;
+    }
+
+    public double getAvg() { return avg; }
+
+    public void setAvg(double avg) {
+        this.avg = avg;
     }
 
     public void setScore(int _score) {
