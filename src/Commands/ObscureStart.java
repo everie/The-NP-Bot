@@ -10,9 +10,11 @@ import Enums.Interval;
 public class ObscureStart extends AbstractCommand {
 
     private NickInfo nickInfo = new NickInfo();
+    private String type;
 
-    public ObscureStart(Interval interval) {
+    public ObscureStart(Interval interval, String type) {
         this.interval = interval;
+        this.type = type;
     }
 
     protected boolean handleParams(String[] params) {
@@ -35,7 +37,7 @@ public class ObscureStart extends AbstractCommand {
     public String getOutput() {
         Obscure stats = new Obscure();
 
-        return stats.getOutput(interval, nickInfo);
+        return stats.getOutput(interval, type, nickInfo);
     }
 
     public String getHelp() {

@@ -27,36 +27,14 @@ public class Obscure {
     private ArrayList<ArtistObscure> artistList = new ArrayList<>();
 
     private int limit = 20;
+    private int bars = 14;
     private String alFilename = "ArtistListeners.ser";
 
-    public String getOutput(Interval interval, NickInfo nickInfo) {
+    public String getOutput(Interval interval, String type, NickInfo nickInfo) {
 
         String ss = info.getSplit();
         String api = info.getApiLastFM();
         String nick = nickInfo.getLfmNick();
-
-        /*
-        String description;
-
-        switch (interval) {
-            case "7day":
-                description = "Last week";
-                break;
-
-            case "1month":
-                description = "Last month";
-                break;
-
-            case "12month":
-                description = "Last year";
-                break;
-
-            default:
-                description = "Overall";
-                break;
-        }
-        */
-
 
         long expiryDate = Instant.now().getEpochSecond() + (14 * 24 * 60 * 60);
         ArtistListeners al = loadObject();
@@ -97,7 +75,11 @@ public class Obscure {
 
             saveObject(al);
 
-            Collections.sort(artistList, Comparator.reverseOrder());
+            if (type.equals("obscure")) {
+                Collections.sort(artistList, Comparator.reverseOrder());
+            } else {
+                Collections.sort(artistList);
+            }
 
             double points = 0;
             //double points2 = 0;
@@ -118,11 +100,12 @@ public class Obscure {
                     leastObscureArtist = ao.getArtist();
                     leastObscureListeners = ao.getListeners();
                 }
-                //System.out.println(ao.getListeners());
-                //System.out.println(getPoints(ao.getListeners(), listSize));
-                //System.out.println(getCalculatedPoints(ao.getListeners(), listSize));
-                //points2 += getCalculatedPoints(ao.getListeners(), listSize);
-                points += getCalculatedPoints(ao.getListeners(), listSize);
+
+                if (type.equals("obscure")) {
+                    points += getObscurePoints(ao.getListeners(), listSize);
+                } else {
+                    points += getMainstreamPoints(ao.getListeners(), listSize);
+                }
             }
 
             String dispPct;
@@ -134,10 +117,17 @@ public class Obscure {
                 dispPct = totalPoints + "%";
             }
 
+            String dispWord;
+            if (type.equals("obscure")) {
+                dispWord = "hipster";
+            } else {
+                dispWord = "sheep";
+            }
+
             //System.out.println(points2 + " " + totalPoints);
 
-            return interval.getTextInterval() + " " + displayNick(nickInfo) + " has been " + Colors.BOLD + dispPct + Colors.NORMAL + " hipster " + ss + " Most obscure: " + dispObscure +
-                    " " + ss + " Least obscure: " + leastObscureArtist + " (" + leastObscureListeners + " listeners)";
+            return interval.getTextInterval() + " " + displayNick(nickInfo) + " has been " + Colors.BOLD + dispPct + Colors.NORMAL + " " + dispWord + " " + getProgressBar(points) + " " + ss + " Most " + type + ": " + dispObscure +
+                    " " + ss + " Least " + type + ": " + leastObscureArtist + " (" + leastObscureListeners + " listeners)";
 
 
         } catch (IOException |JSONException e) {
@@ -154,6 +144,32 @@ public class Obscure {
         }
     }
 
+    private String getProgressBar(double pct) {
+        pct = pct / 100.0;
+        int dispBars = (int)Math.round(pct * (double) bars);
+
+        String barColour;
+        if (pct <= 0.33) {
+            barColour = Colors.RED;
+        } else if (pct > 0.33 && pct < 0.66) {
+            barColour = Colors.YELLOW;
+        } else {
+            barColour = Colors.DARK_GREEN;
+        }
+
+        String bar = Colors.DARK_GRAY + "[" + barColour;
+
+        for (int i = 0; i < bars; i++) {
+            if (i == dispBars) {
+                bar += Colors.NORMAL;
+            }
+            bar += "|";
+        }
+
+        return bar + Colors.DARK_GRAY + "]" + Colors.NORMAL;
+    }
+
+    /*
     private double getPoints(int listeners, int size) {
         //double pointsPrArtist = 100.0 / (double)size;
         if (listeners <= 500) {
@@ -178,8 +194,9 @@ public class Obscure {
             return 0;
         }
     }
+    */
 
-    private double getCalculatedPoints(int listeners, int size) {
+    private double getObscurePoints(int listeners, int size) {
         double pointsPrArtist = 100.0 / (double)size;
         //double points = 6.5707 * (1.0 / Math.pow((double)listeners, 0.30294));
         //double points = 1.00231 * (1.0 / Math.pow(Math.E, 0.000004607470000 * (double)listeners));
@@ -202,6 +219,18 @@ public class Obscure {
         }
 
         //System.out.println(points);
+
+        return points * pointsPrArtist;
+    }
+
+    private double getMainstreamPoints(int listeners, int size) {
+        double pointsPrArtist = 100.0 / (double)size;
+        //double points = 6.5707 * (1.0 / Math.pow((double)listeners, 0.30294));
+        double points = 0.00214734 * Math.pow(listeners, 0.417025);
+
+        if (points > 1) {
+            points = 1.0;
+        }
 
         return points * pointsPrArtist;
     }

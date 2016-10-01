@@ -53,10 +53,14 @@ public class Command {
         commandMap.put("TAGSYEAR", new CommandInfo(new TagsStart(Interval.YEAR), Category.Stats, "tags", false, true));
         commandMap.put("TAGSALL", new CommandInfo(new TagsStart(Interval.ALL), Category.Stats, "tags", false, true));
         commandMap.put("TOPAVERAGE", new CommandInfo(new TopAverage(), Category.Stats, null, true, true));
-        commandMap.put("OBSCURE", new CommandInfo(new ObscureStart(Interval.MONTH), Category.Stats, "obscure", true, true));
-        commandMap.put("OBSCUREWEEK", new CommandInfo(new ObscureStart(Interval.WEEK), Category.Stats, "obscure", false, true));
-        commandMap.put("OBSCUREYEAR", new CommandInfo(new ObscureStart(Interval.YEAR), Category.Stats, "obscure", false, true));
-        commandMap.put("OBSCUREALL", new CommandInfo(new ObscureStart(Interval.ALL), Category.Stats, "obscure", false, true));
+        commandMap.put("OBSCURE", new CommandInfo(new ObscureStart(Interval.MONTH, "obscure"), Category.Stats, "obscure", true, true));
+        commandMap.put("OBSCUREWEEK", new CommandInfo(new ObscureStart(Interval.WEEK, "obscure"), Category.Stats, "obscure", false, true));
+        commandMap.put("OBSCUREYEAR", new CommandInfo(new ObscureStart(Interval.YEAR, "obscure"), Category.Stats, "obscure", false, true));
+        commandMap.put("OBSCUREALL", new CommandInfo(new ObscureStart(Interval.ALL, "obscure"), Category.Stats, "obscure", false, true));
+        commandMap.put("MAINSTREAM", new CommandInfo(new ObscureStart(Interval.MONTH, "mainstream"), Category.Stats, "mainstream", true, true));
+        commandMap.put("MAINSTREAMWEEK", new CommandInfo(new ObscureStart(Interval.WEEK, "mainstream"), Category.Stats, "mainstream", false, true));
+        commandMap.put("MAINSTREAMYEAR", new CommandInfo(new ObscureStart(Interval.YEAR, "mainstream"), Category.Stats, "mainstream", false, true));
+        commandMap.put("MAINSTREAMALL", new CommandInfo(new ObscureStart(Interval.ALL, "mainstream"), Category.Stats, "mainstream", false, true));
         // SEARCH
         commandMap.put("G", new CommandInfo(new SearchGoogle(), Category.Search, null, true, true));
         commandMap.put("SPOT", new CommandInfo(new SearchSpotify(), Category.Search, null, true, true));
