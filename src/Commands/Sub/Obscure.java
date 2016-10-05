@@ -226,7 +226,7 @@ public class Obscure {
     private double getMainstreamPoints(int listeners, int size) {
         double pointsPrArtist = 100.0 / (double)size;
         //double points = 6.5707 * (1.0 / Math.pow((double)listeners, 0.30294));
-        double points = 0.00214734 * Math.pow(listeners, 0.417025);
+        double points = 0.00182662 * Math.pow(listeners, 0.434588);
 
         if (points > 1) {
             points = 1.0;

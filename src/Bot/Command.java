@@ -27,7 +27,8 @@ public class Command {
         commandMap.put("HELP", new CommandInfo(new Overview(), Category.Spam, null, true, false));
         commandMap.put("NP", new CommandInfo(new NowPlaying(), Category.Spam, null, true, true));
         commandMap.put("TV", new CommandInfo(new NowWatching(), Category.Spam, null, true, true));
-        commandMap.put("WEATHER", new CommandInfo(new Weather(), Category.Spam, null, true, true));
+        commandMap.put("WEATHER", new CommandInfo(new Weather(true), Category.Spam, null, true, true));
+        commandMap.put("WEATHER2", new CommandInfo(new Weather(false), Category.Spam, null, true, true));
         commandMap.put("FORECAST", new CommandInfo(new WeatherForecast(), Category.Spam, null, true, true));
         commandMap.put("EXCUSE", new CommandInfo(new Excuse(), Category.Spam, null, true, false));
         commandMap.put("ISITBEDTIME?", new CommandInfo(new Bedtime(), Category.Spam, null, true, false));

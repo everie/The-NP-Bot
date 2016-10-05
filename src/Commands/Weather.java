@@ -15,6 +15,11 @@ import java.time.Instant;
 public class Weather extends AbstractCommand {
 
     private NickInfo nickInfo = new NickInfo();
+    private boolean newService;
+
+    public Weather(boolean newService) {
+        this.newService = newService;
+    }
 
     protected boolean handleParams(String[] params) {
 
@@ -39,8 +44,73 @@ public class Weather extends AbstractCommand {
         return explain + " Usage: " + cmd + " <IRC Nick|Location> OR " + cmd + " alone for registered irc nicks.";
     }
 
+    public String getWunderground() {
+        String api = info.getApiOpenWeaherMap();
+        String ss = info.getSplit();
+        String location = nickInfo.getLfmNick();
+        long now = Instant.now().getEpochSecond();
+
+        try {
+
+            String input = toolBox.apiToString("http://autocomplete.wunderground.com/aq?query=" + URLEncoder.encode(location, "UTF-8"));
+            JSONObject obj = new JSONObject(input).getJSONArray("RESULTS").getJSONObject(0);
+
+            String newQuery = obj.getString("l");
+
+            //System.out.println(newQuery);
+
+            //System.out.println("http://api.wunderground.com/api/ffab84f6a1927e0d/conditions" + newQuery + ".json");
+
+            String inputWeather = toolBox.apiToString("http://api.wunderground.com/api/ffab84f6a1927e0d/conditions" + newQuery + ".json");
+
+            JSONObject wObj = new JSONObject(inputWeather).getJSONObject("current_observation");
+
+            String name = wObj.getJSONObject("display_location").getString("full");
+            long observation = wObj.getLong("observation_epoch");
+
+            String weatherString = wObj.getString("weather");
+
+            double temperature = wObj.getDouble("temp_c");
+            double feelsLike = Double.parseDouble(wObj.getString("feelslike_c"));
+            String humidity = wObj.getString("relative_humidity");
+
+            //int windDeg = wObj.getInt("wind_dir");
+            String dispWind = toolBox.getDirection(wObj.getInt("wind_degrees"));
+            double windSpeed = Math.round((wObj.getDouble("wind_kph") / 3.6) * 100.0) / 100.0;
+            //double windGusts = wObj.getDouble("wind_gust_kph");
+            String dispGusts;
+            try {
+                double windGusts = Math.round((Double.parseDouble(wObj.getString("wind_gust_kph")) / 3.6) * 100.0) / 100.0;
+                dispGusts = "(Gusts: " + windGusts + "m/s) ";
+            } catch (JSONException e) {
+                dispGusts = "";
+            }
+
+
+            int minsAgo = (int) ((now - observation) / 60);
+
+            return "Location: " + name + " " + ss + " Weather: " + weatherString + " " + ss +
+                    " Temp: " + temperature + "°C" + " (Feels like: " + feelsLike + "°C) " + ss +
+                    " Humidity: " + humidity + " " + ss + " Wind: " + windSpeed + "m/s " + dispGusts + "(" + dispWind + ") " + ss +
+                    " Last update: " + minsAgo + " minutes ago.";
+
+
+        } catch (IOException|JSONException e) {
+            if (e.getMessage().equals("JSONArray[0] not found.")) {
+                return "Location \"" + location + "\" not found.";
+            }
+            return "Something went wrong. " + e.getMessage();
+        }
+
+    }
+
     public String getOutput()
     {
+
+        if (newService) {
+            return getWunderground();
+        }
+
         String api = info.getApiOpenWeaherMap();
         String ss = info.getSplit();
         String location = nickInfo.getLfmNick();

@@ -70,8 +70,16 @@ public class Stats {
 
             long regDate = Integer.parseInt(reg.getString("unixtime"));
 
+            String dispLoves;
+
             if (days == 0)
             {
+
+                String inputLoves = toolBox.apiToString("http://ws.audioscrobbler.com/2.0/?method=user.getlovedtracks&user=" + nick + "&api_key=" + api + "&format=json&limit=1");
+                int loves = new JSONObject(inputLoves).getJSONObject("lovedtracks").getJSONObject("@attr").getInt("total");
+
+                dispLoves = loves + " loved tracks, ";
+
                 long nowDate = Instant.now().getEpochSecond();
 
                 long regTime = nowDate - regDate;
@@ -82,6 +90,8 @@ public class Stats {
             } else {
                 regDays = days;
                 regDaysClean = days;
+
+                dispLoves = "";
             }
 
             double pcDays = Math.round((double)pc*100.00 / regDays)/100.00;
@@ -114,7 +124,7 @@ public class Stats {
                 showReg = " (" + toolBox.getDateFromTS(regDate) + ")";
             }
 
-            String showDays = Colors.BOLD + "General: " + Colors.NORMAL + regDaysClean + " days" + showReg + ", " + pc + " scrobbles, " + pcDays + " scrobbles/day";
+            String showDays = Colors.BOLD + "General: " + Colors.NORMAL + regDaysClean + " days" + showReg + ", " + dispLoves + pc + " scrobbles, " + pcDays + " scrobbles/day";
             String showArtists = Colors.BOLD + "Artists: " + Colors.NORMAL + artists + " unique artists, " + artistsDays + " new artists/day, " + artistsPc + " scrobbles/artist";
             String showTracks = Colors.BOLD + "Tracks: " + Colors.NORMAL + tracks + " unique tracks, " + tracksDays + " new tracks/day, " + tracksPc + " scrobbles/track, " + artistsTracks + " tracks/artist.";
 

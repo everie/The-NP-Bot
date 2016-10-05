@@ -20,7 +20,7 @@ public class Bot extends PircBot {
     private BotInfo info = Info.getInfo();
     private Seen seen = new Seen();
     private Web web = new Web();
-    private Set<String> ignoreNicks = new HashSet<>(Arrays.asList("MrRoboto", "DrumsRadio", "BAIT", "FailBot", "nplayer"));
+    private Set<String> ignoreNicks = new HashSet<>(Arrays.asList("MrRoboto", "DrumsRadio", "BAIT", "FailBot", "nplayer", "Junglist"));
 
     private int splitLength = 350;
 
@@ -97,9 +97,11 @@ public class Bot extends PircBot {
                 for (int i = 0; i < msg.length; i++) {
                     String link = msg[i];
                     if (link.startsWith("http://") || link.startsWith("https://")) {
-                        String title = web.getTitle(msg[i], sender);
-                        if (title.length() > 0) {
-                            sendMessage(channel, title);
+                        if (!link.contains(":8000")) {
+                            String title = web.getTitle(msg[i], sender);
+                            if (title.length() > 0) {
+                                sendMessage(channel, title);
+                            }
                         }
                     }
                 }
